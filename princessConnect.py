@@ -1,7 +1,7 @@
 #! python3
 """princess connect assistant
 afunpub@gmail.com
-I learn to develop the princess connect assistant with python language.It's unfinished
+I learn to develop the princess connect assistant with python language.It's unfinished .
 """
 import keyboard, pyautogui, time, logging, os
 
@@ -99,9 +99,7 @@ def main():
 
 a = Get()
 keyboard.on_press_key("f12", a.doThis)
-##keyboard.add_hotkey('f3',a.doThis)
-# keyboard.add_hotkey('f11',buff)
-# keyboard.add_hotkey('5',skill3)
+
 last_time = time.time()
 GAME_REGION = ()
 getGameRegion()
