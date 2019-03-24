@@ -26,8 +26,10 @@ def getGameRegion():
 
     # identify the top-left corner
     logging.info('Finding game region...')
-    region = pyautogui.locateOnScreen(imPath('top_right_corner.png'))
+    region = pyautogui.locateOnScreen(imPath('top_right_corner.png'))  # 公會畫面
     if region is None:
+        region = pyautogui.locateOnScreen(imPath('top_right_corner02.png'))  # 冒險畫面
+    elif region is None:
         raise Exception('Could not find game on screen. Is the game visible?')
 
     # calculate the region of the entire game
@@ -39,14 +41,19 @@ def getGameRegion():
 
 def challenge():
     global battleStep
-    pos = pyautogui.locateCenterOnScreen(imPath('challenge.png'), region=GAME_REGION)
-    if pos:
+    # pos = pyautogui.locateCenterOnScreen(imPath('challenge.png'), region=GAME_REGION)
+    if pyautogui.locateCenterOnScreen(imPath('challenge.png'), region=GAME_REGION):
+        pos = pyautogui.locateCenterOnScreen(imPath('challenge.png'), region=GAME_REGION)
         pyautogui.click(pos)
         battleStep = 2
         print('battleStep :' + str(battleStep))
-    else:
+    elif pyautogui.locateCenterOnScreen(imPath('challenge02.png'), region=GAME_REGION):
         pos = pyautogui.locateCenterOnScreen(imPath('challenge02.png'), region=GAME_REGION)
-    if pos:
+        pyautogui.click(pos)
+        battleStep = 2
+        print('battleStep :' + str(battleStep))
+    elif pyautogui.locateCenterOnScreen(imPath('challenge03.png'), region=GAME_REGION):
+        pos = pyautogui.locateCenterOnScreen(imPath('challenge03.png'), region=GAME_REGION)
         pyautogui.click(pos)
         battleStep = 2
         print('battleStep :' + str(battleStep))
@@ -72,15 +79,19 @@ def nextStep():
     elif pos and battleStep == 4:
         pyautogui.click(pos)
         battleStep = 1
+        pos = False
         print('battleStep :' + str(battleStep))
+    else:
+        challenge()
+        ok()
 
 
 def ok():
-    while True:
-        pos = pyautogui.locateCenterOnScreen('ok.png')
-        if pos:
-            pyautogui.click(pos)
-            break
+    pos = pyautogui.locateCenterOnScreen(imPath('ok.png'), region=GAME_REGION)
+    if pos and battleStep == 3:
+        pyautogui.click(pos)
+        print('battleStep :' + str(battleStep))
+        print('press ok button.')
 
 
 def main():
